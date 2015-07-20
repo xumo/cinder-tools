@@ -1,5 +1,6 @@
 /*
 	Galería de imágenes
+	Simple Slider
 */
 #pragma once
 #include "cinder/app/App.h"
@@ -10,12 +11,19 @@
 class Foto
 {
 public:
-	Foto(ci::Rectf rect, ci::gl::TextureRef texture) :mRect(rect), mTexture(texture){};
+	Foto(ci::Rectf rect, ci::gl::TextureRef texture);
+	
+	
 	void draw();
 	void asginarRect(ci::Rectf rect);
 	void mover(float x);
-	ci::Rectf mRect;
+
+	//Un rectangulo es donde se pintará, y el otro es donde estará contenido
+	ci::Rectf mRect,
+			  mRectContenedor;
 	ci::gl::TextureRef mTexture;
+
+	float nH, nW, xPos, yPos;
 };
 
 typedef	std::shared_ptr<Foto> FotoRef;
@@ -35,6 +43,7 @@ public:
 	void mouseDown( ci::app::MouseEvent &event );
 
 	void update();
+	void render();
 	void draw();
 
 private:
@@ -49,5 +58,27 @@ private:
 					xPos,
 					yPos;
 
+	//Para controlar el cambio
+	//Indice de la foto activa
+	//std::size_t sería lo correcto pues es el tipo que se 
+	//usa para contenedores std
+	//http://googleprojectzero.blogspot.de/2015/07/when-int-is-new-short.html
+	//std::size_t		fotoActiva;
+	//Pero con int funciona
+	int					fotoActiva;
+	float				indice;
+
+	//Para aplicar una "máscara" y que se vea sólo el área del rectangulo contenedor
+	//usaremos un FBO http://libcinder.org/docs/v0.8.4/guide__gl___fbo.html
+	ci::gl::FboRef			mFbo;
+
+	//Variables para los botones
+	//Imágenes 
+	ci::gl::TextureRef		mBtnSiguiente,
+							mBtnPrevio;
+	//Rectángulos en dónde se vana pintar
+	ci::Rectf				mRectSiguiente,
+							mRectPrevio;
+	
 };
 
