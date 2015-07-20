@@ -18,7 +18,7 @@ static void prepareSettings(App::Settings *settings)
 	settings->setFrameRate(60);
 	//settings->setWindowSize(1366, 768);
 	//settings->setAlwaysOnTop(true);
-	settings->setTitle("Telem·tica");
+	settings->setTitle("Galer√≠a de fotos");
 
 
 }
