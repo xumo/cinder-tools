@@ -89,6 +89,35 @@ En windows  está peor, hay que editar el archivo Resources.rc y añadir una lí
 VARIABLE_DE_PREPROCESADOR
 ```
 
+###Assets
+Existe una carpeta llamada "assets", y cualquier programa de Cinder la va a  buscar primero en su mismo nivel y hasta dos niveles arriba ../../ (me parece). Ahí es un buen logar para poner los elementos que se van a cargar en tiempo de ejecución.
+
+
+
+
+###Texto
+Para poner texto en pantalla hay varias maneras que generalmente terminan en *algo* que la *hace* y luego la *renderea* a textura y uno termina con una textura que puede pintar.  
+Lo más sencillo es usar una `TextureFontRef` junto con un `Font` que puede usar tipografía instaladas en el sistema o bien cargar una en formato ttf.
+
+Primero se declara las variables que usan:
+```
+ci::Font					debugFont;
+ci::gl::TextureFontRef      debugTexture;
+
+```
+
+Luego se carga la fuente y se crea la textura que a pintar el texto:
+```
+debugFont = ci::Font("Arial", 24);
+debugTexture = ci::gl::TextureFont::create(debugFont);
+``
+
+Finalmente en se puede pintar las string que sean cualquier posición de la pantalla, la posición en x es el lado izquierdo y y es la parte inferior del texto:
+```
+debugTexture->drawString("Hola" , ci::vec2(10, 10));
+debugTexture->drawString("Mundo!!" , ci::vec2(10, 30));
+```
+
 
 
 
