@@ -63,7 +63,7 @@ La acción se realiza mediante la el método `ci::app::loadAsset("ruta/dentro/de
 Hay dos formas de cargar una imagen en Cinder: directamente a una textura de OpenGL y a un objecto Surface. El primero vivirá en un espacio de la memoria de la tarjeta de video (GPU) y el segundo vive en la memoria RAM a donde nuestro CPU tiene acceso.
 
 Para cargar a textura una imagen localizada en la carpeta *assets*: 
-```
+```c++
 //Carga simple
 gl::TextureRef      texImagen;
  texImagen = gl::Texture::create( loadImage( getAssetPath( "fondo.jpg" ) ) );
@@ -83,7 +83,7 @@ gl::draw( texImagen , Rectf( 20 , 20 , 120 ,120 ) );
 Para cargar un video se tiene que incluir las cabeceras de Quicktime, aunque parece que desde Cinder 9 ya te utiliza el AVFoundation para reproducir video. Después de cargarlo hay que llamar a su método ```play()``` para que pueda iniciar su reproducción.
 Finalmente para pintarlo se llama a su método ```getTexture()``` para obtener la textura que generó.
 
-```
+```c++
 #include "cinder/qtime/QuickTimeGl.h"
 ...
 qtime::MovieGlRef   video;
@@ -122,7 +122,7 @@ En mac se deben añadir los archivos al proyecto de XCode al arrastrarlos a la c
 
 En windows  está peor, hay que editar el archivo Resources.rc y añadir una línea con la variable:
 
-```
+```c++
 #include "..\include\Resources.h"
 
 VARIABLE_DE_PREPROCESADOR
@@ -144,7 +144,7 @@ En general una surface primero tiene que convertirse a texture para ser pintada 
 
 Primero se debe crear un objectos `ci::Surface` con parámetro de dimensiones y el tercero si se quiere que contenga información de alpha o transparencia:
 
-```
+```c++
 ci::Surface mSur( ancho , alto, true);
 
 //obien cargando una imagen
@@ -152,7 +152,7 @@ ci::Surface mFoto = ci::loadImage( ci::app::loadAsset( "foto.jpg" ) );
 
 ```
 Ya después se le puede asignar un valor ,aleatorio por ejemplo, a cada pixel: 
-```
+```c++
 ci::Surface::Iter iter = mSur.getIter();
     while( iter.line() ) {
         while( iter.pixel() ) {
@@ -176,20 +176,20 @@ Para poner texto en pantalla hay varias maneras que generalmente terminan en *al
 Lo más sencillo es usar una `TextureFontRef` junto con un `Font` que puede usar tipografía instaladas en el sistema o bien cargar una en formato ttf.
 
 Primero se declara las variables que usan:
-```
+```c++
 ci::Font					debugFont;
 ci::gl::TextureFontRef      debugTexture;
 
 ```
 
 Luego se carga la fuente y se crea la textura que a pintar el texto:
-```
+```c++
 debugFont = ci::Font("Arial", 24);
 debugTexture = ci::gl::TextureFont::create(debugFont);
 ``
 
 Finalmente en se puede pintar las string que sean cualquier posición de la pantalla, la posición en x es el lado izquierdo y y es la parte inferior del texto:
-```
+```c++
 debugTexture->drawString("Hola" , ci::vec2(10, 10));
 debugTexture->drawString("Mundo!!" , ci::vec2(10, 30));
 ```
