@@ -90,7 +90,50 @@ VARIABLE_DE_PREPROCESADOR
 ```
 
 ###Assets
-Existe una carpeta llamada "assets", y cualquier programa de Cinder la va a  buscar primero en su mismo nivel y hasta dos niveles arriba ../../ (me parece). Ahí es un buen logar para poner los elementos que se van a cargar en tiempo de ejecución.
+Existe una carpeta llamada "assets", y cualquier programa de Cinder la va a  buscar primero en su mismo nivel y hasta dos niveles arriba ../../ (me parece). Ahí es un buen lugar para poner los elementos que se van a cargar en tiempo de ejecución.
+
+###Gráficos (Imágenes)
+Cuando se pinta con la computadora una imagen, sus datos, pasan por dos partes: la memoria del CPU y la memoria del GPU, a veces son la misma. En Cinder se distinguen por dos tipos de objecto:
+
+- Surface: se encrga de manejar los datos o pixeles de una imagen en el CPU. Con ella podemos iterar sobre el contenido de sus pixeles y leer su valor o asignarles uno.
+- Texture: las texturas son los datos de la imagen ya en la memoria de la tartjesta gráfica (GPU). En nuestro caso Cinder usa OpenGL para toda la graficación por GPU.
+
+En general una surface primero tiene que convertirse a texture para ser pintada por OpengGL, pero no es al revés: una textura puede no venir de una Surface.
+
+
+##Surface
+
+Primero se debe crear un objectos `ci::Surface` con parámetro de dimensiones y el tercero si se quiere que contenga información de alpha o transparencia:
+
+```
+ci::Surface mSur( ancho , alto, true);
+
+//obien cargando una imagen
+ci::Surface mFoto = ci::loadImage( ci::app::loadAsset( "foto.jpg" ) );
+
+```
+Ya después se le puede asignar un valor ,aleatorio por ejemplo, a cada pixel: 
+```
+ci::Surface::Iter iter = mSur.getIter();
+    while( iter.line() ) {
+        while( iter.pixel() ) {
+            iter.r() = ci::randInt( 255 );
+            iter.g() = ci::randInt( 255 );
+            iter.b() = ci::randInt( 255 );
+        }
+    }
+```
+Nótese que Cinder hacer de contenedores de la biblioteca stándar para los datos de pixeles, por esa razón es mejor utilizar iteradores. Se recomienda leer acerca de los contenedores e iteradores de std en C++. 
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -117,6 +160,33 @@ Finalmente en se puede pintar las string que sean cualquier posición de la pant
 debugTexture->drawString("Hola" , ci::vec2(10, 10));
 debugTexture->drawString("Mundo!!" , ci::vec2(10, 30));
 ```
+
+
+
+###Shaders
+Cuando se manejan los shaders con Cinder, ya les pasa algunas variables útiles por default.
+
+```
+ciModelMatrix
+ciModelMatrixInverse
+ciModelMatrixInverseTranspose
+ciViewMatrix
+ciViewMatrixInverse
+ciModelView
+ciModelViewInverse
+ciModelViewInverseTranspose
+ciModelViewProjection
+ciModelViewProjectionInverse
+ciProjectionMatrix
+ciProjectionMatrixInverse
+ciViewProjection
+ciNormalMatrix
+ciViewportMatrix
+ciWindowSize
+ciElapsedSeconds
+```
+
+**Para pasar texturas al shader**
 
 
 
