@@ -59,6 +59,45 @@ Son archivos que viven en la carpeta assets, que Cinder busca en el nivel inmedi
 
 La acción se realiza mediante la el método `ci::app::loadAsset("ruta/dentro/de/assets")` y regresa un referencia del tipo `DataSource`o bien `DataSourceRef`. Esta referencia es lo que se pasa a un cargador de imagen, video o xml.
 
+###Cargar una imagen
+Hay dos formas de cargar una imagen en Cinder: directamente a una textura de OpenGL y a un objecto Surface. El primero vivirá en un espacio de la memoria de la tarjeta de video (GPU) y el segundo vive en la memoria RAM a donde nuestro CPU tiene acceso.
+
+Para cargar a textura una imagen localizada en la carpeta *assets*: 
+```
+//Carga simple
+gl::TextureRef      texImagen;
+ texImagen = gl::Texture::create( loadImage( getAssetPath( "fondo.jpg" ) ) );
+
+//Cargando con opciones
+texImagen = gl::Texture::create( loadImage( getAssetPath( "fondo.jpg" ) ) ,ci::gl::Texture::Format().minFilter( GL_LINEAR_MIPMAP_LINEAR ).magFilter( GL_LINEAR ).mipmap().wrap( GL_REPEAT )  );
+
+//Pintarla
+gl::draw( texImagen);
+
+//Pintarla cambiando su tamaño y posición
+gl::draw( texImagen , Rectf( 20 , 20 , 120 ,120 ) );
+
+```
+
+###Cargar un video
+Para cargar un video se tiene que incluir las cabeceras de Quicktime, aunque parece que desde Cinder 9 ya te utiliza el AVFoundation para reproducir video. Después de cargarlo hay que llamar a su método ```play()``` para que pueda iniciar su reproducción.
+Finalmente para pintarlo se llama a su método ```getTexture()``` para obtener la textura que generó.
+
+```
+#include "cinder/qtime/QuickTimeGl.h"
+...
+qtime::MovieGlRef   video;
+
+video = qtime::MovieGl::create( getAssetPath( "nautilus.mp4" ) );
+video->play();
+
+gl::draw( video->getTexture() );
+
+```
+
+
+
+
 ###Resources
 Estos archivos viven en la carpeta resources, y se embeben en el ejecutable de la aplicación. Es sumamente útil si quiere cargar contenido una vez y estás seguro que no se cambiarán nunca más. 
 
@@ -124,12 +163,6 @@ ci::Surface::Iter iter = mSur.getIter();
     }
 ```
 Nótese que Cinder hacer de contenedores de la biblioteca stándar para los datos de pixeles, por esa razón es mejor utilizar iteradores. Se recomienda leer acerca de los contenedores e iteradores de std en C++. 
-
-
-
-
-
-
 
 
 
