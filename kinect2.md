@@ -40,10 +40,5 @@ xcopy /e /i /y "$(KINECTSDK20_DIR)Redist\Face\$(PlatformTarget)\NuiDatabase" "$(
 
 
 
-```
-xcopy /e /i /y "$(SolutionDir)..\blocks\Cinder-KCB2\lib\$(PlatformTarget)\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\"
-xcopy /e /i /y "$(KINECTSDK20_DIR)Redist\Face\$(PlatformTarget)\Kinect20.Face.dll" "$(SolutionDir)$(Platform)\$(Configuration)\"
-xcopy /e /i /y "$(KINECTSDK20_DIR)Redist\Face\$(PlatformTarget)\NuiDatabase" "$(SolutionDir)$(Platform)\$(Configuration)\NuiDatabase"
-```
 
 
