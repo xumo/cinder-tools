@@ -183,7 +183,7 @@ Luego se carga la fuente y se crea la textura que a pintar el texto:
 ```c++
 debugFont = ci::Font("Arial", 24);
 debugTexture = ci::gl::TextureFont::create(debugFont);
-``
+```
 
 Finalmente en se puede pintar las string que sean cualquier posición de la pantalla, la posición en x es el lado izquierdo y y es la parte inferior del texto:
 ```c++
