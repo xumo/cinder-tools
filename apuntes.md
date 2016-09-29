@@ -168,9 +168,6 @@ Nótese que Cinder hacer de contenedores de la biblioteca stándar para los dato
 
 
 
-
-
-
 ###Texto
 Para poner texto en pantalla hay varias maneras que generalmente terminan en *algo* que la *hace* y luego la *renderea* a textura y uno termina con una textura que puede pintar.  
 Lo más sencillo es usar una `TextureFontRef` junto con un `Font` que puede usar tipografía instaladas en el sistema o bien cargar una en formato ttf.
@@ -194,6 +191,39 @@ debugTexture->drawString("Hola" , ci::vec2(10, 10));
 debugTexture->drawString("Mundo!!" , ci::vec2(10, 30));
 ```
 
+###Textbox
+Hay veces que se requiere un cuadro de texto con ajuste de línea, fondo con color, etc. Para eso exite el Textbox. En el ejemplo samples/TextBox podemos ver que se necesita una textura y una tipografía para usarla.
+
+```c++
+gl::TextureRef      mTextTexture;
+vec2                mSize;
+Font                mFont;
+```
+Donde `mSize` es el tamaño del cuadro de texto. Después de definir la tipografía como antes se puede crear el cuaro de texto. 
+
+```
+string txt = "Here is some text that is larger than can fit naturally inside of 100 pixels.\nAnd here is another line after a hard break.";
+    TextBox tbox = TextBox().alignment( TextBox::RIGHT ).font( mFont ).size( ivec2( mSize.x, TextBox::GROW ) ).text( txt );
+    tbox.setColor( Color( 1.0f, 0.65f, 0.35f ) );
+    tbox.setBackgroundColor( ColorA( 0.5, 0, 0, 1 ) );
+    ivec2 sz = tbox.measure();
+    console() << "Height: " << sz.y << endl;
+    mTextTexture = gl::Texture2d::create( tbox.render() );
+```
+Está muy chulo que después de crear el cuadro y antes de ponerlo en una textura se pueda tener las nuevas dimensiones del cuadro de texto, pues en este caso `TextBox::GROW` define que el alto se ajuste al largo del texto.
+
+
+###Audio
+Para utilizar audio se pueden utilizar varias bibliotecas, principalmente la interna de Cinder o el bloque que envuelve FMOD. Aquí describiré cómo utilizar audio con la biblioteca interna.
+
+El sistema de audio de Cinder está diseñado a partir de una gráfica en el sentido de nodos y relaciones de tal manera que las fuentes de audio son nodos, sus modificadores como filtros y ganancias también los son.
+
+Se incluye su cabecera.
+```c++
+#include "cinder/audio/audio.h"
+```
+
+Después se declaran los nodos
 
 
 ###Shaders
