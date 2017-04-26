@@ -1,7 +1,7 @@
 Apuntes sobre Cinder
 ====================
 
-Cinder es junto a Openframeworks una de la mejores herramientas disponibles para producir interactivos multimedia con C++ y OpenGL. A diferencia de OF, Cinder se ha esmerado en utilizar el paradigma que impulsa la biblioteca standart std, C++ 11 y el uso de boost. De esta manera la curva de aprendizaje es un poco mayor se se es ajeno al tortuoso mundo de C++, pero vale la pena. En mi caso uso C++ cuando es necesario tener procesamiento o manejo de video en tiempo real y por supuesto 3D en sus diferentes facetas.
+Cinder es junto a Openframeworks una de la mejores herramientas disponibles para producir interactivos multimedia con C++ y OpenGL.En mi caso uso C++ cuando es necesario tener procesamiento o manejo de video en tiempo real y por supuesto 3D en sus diferentes facetas.
 
 
 En esta serie de apuntes planeo hacer un recuento de conceptos básicos con los que me he encontrado. Casi todo está en la página de Cinder.
